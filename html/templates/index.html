@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>行列の簡約化（途中式付き）</title>
+        <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+        <meta name="viewport"
+        content="width=320,
+        height=480,
+        initial-scale=1.0,
+        minimum-scale=1.0,
+        maximum-scale=2.0,
+        user-scalable=yes" />
+    </head>
+    <body>
+        <br>
+        <h1>行列の簡約化（途中式付き）</h1>
+        <p><a href="http://kanyaku.namnium.work/">こちらのサイト</a>が便利だったので途中式も出るようにしてみました</p>
+        <p>なにかあったら<a href="https://twitter.com/gaato__">がーと</a>まで</p>
+        <br>
+        <form action="/" method="get">
+            <p>行数：<input type="number" name="row-num" value="{{row_num}}"></p>
+            <p>列数：<input type="number" name="col-num" value="{{col_num}}"></p>
+            <p><input type="submit" value="設定"></p>
+        </form action="/" method="post">
+        <br>
+        <br>
+        <form action="/" method="post">
+            <input type="hidden" name="row-num" value="{{row_num}}">
+            <input type="hidden" name="col-num" value="{{col_num}}">
+            <table id="input-mat">
+                <tbody>
+{% for i in range(row_num) %}
+                    <tr class="ipt-row">
+    {% for j in range(col_num) %}
+                        <td><input type="text" name="input-mat[{{i}}][{{j}}]" class="ipt-val" value="{{input_mat[i][j]}}"></td>
+    {% endfor %}
+                    </tr>
+{% endfor %}
+                </tbody>
+            </table>
+            <p><input type="submit" value="簡約化"></p>
+        </form>
+{% if result != '' %}
+        \[{{result}}\]
+{% endif %}
+    </body>
+</html>
