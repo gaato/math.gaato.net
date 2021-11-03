@@ -1,3 +1,5 @@
+import re
+
 from flask import Flask, request
 from flask.templating import render_template
 import sympy
@@ -78,14 +80,20 @@ def main_post():
     row_num = int(request.form.get('row-num', '3'))
     col_num = int(request.form.get('col-num', '3'))
     input_mat = []
+    flag = False
     for i in range(row_num):
         l = []
         for j in range(col_num):
-            l.append(request.form.get(f'input-mat[{i}][{j}]'))
+            element = request.form.get(f'input-mat[{i}][{j}]')
+            if not re.fullmatch(r'[a-zA-Z0-9\+\-\*\/\.]+', element):
+                flag = True
+            l.append(element)
         input_mat.append(l)
+    if flag:
+        return render_template('index.html', row_num=row_num, col_num=col_num, input_mat=input_mat, result='要素が空か，使用できない文字が含まれています．')
     m = sympy.Matrix(input_mat)
     result = simplification(m)
-    return render_template('index.html', row_num=row_num, col_num=col_num, input_mat=input_mat, result=result)
+    return render_template('index.html', row_num=row_num, col_num=col_num, input_mat=input_mat, result='\\[' + result + '\\]')
 
 
 if __name__ == "__main__":
