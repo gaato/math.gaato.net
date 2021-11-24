@@ -33,7 +33,7 @@ def row_add(n, i, j, c):
 
 def simplification(a):
 
-    r = r'\begin{align*}'
+    r = r'\begin{aligned}'
     r += sympy.latex(a)
     m = len(a.col(0))
     n = len(a.row(0))
@@ -64,7 +64,7 @@ def simplification(a):
             r += r'&\to' + sympy.latex(a) + r'\\'
         i += 1
         j += 1
-    r += r'\end{align*}'
+    r += r'\end{aligned}'
     return r
 
 
